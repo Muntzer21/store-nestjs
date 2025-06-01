@@ -66,7 +66,7 @@ export class UsersController {
   }
 
   @Patch('change-password')
-    async changePassword(@Body() changePaasword : ChangePasswordDto@CurrentUser() currentUser)
+    async changePassword(@Body() changePaasword : ChangePasswordDto,@CurrentUser() currentUser)
   {
     const userId = currentUser.id;
     return this.usersService.changePassword(changePaasword, userId);

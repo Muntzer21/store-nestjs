@@ -1,20 +1,15 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Order } from './entities/order.entity';
 import { Repository } from 'typeorm';
-import { OrderProuctsDto } from './dto/ordered-products.dto';
 import { OrdersProducts } from './entities/orders.producta.entity';
 import { Shipping } from './entities/shipping.entity';
 import { UsersService } from 'src/users/users.service';
-import { get } from 'http';
 import { Product } from 'src/product/entities/product.entity';
 import { ProductService } from 'src/product/product.service';
-import { User } from 'src/users/entities/user.entity';
 import { OrderStatus } from './enums/oders-status';
 import { UpdateOrderSatus } from './dto/update-order-status.dto';
-import { CurrentUser } from 'src/users/decorators/current-user.decorator';
 
 @Injectable()
 export class OrderService {
