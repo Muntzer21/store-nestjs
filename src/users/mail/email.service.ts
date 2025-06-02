@@ -22,6 +22,7 @@ export class EmailService {
     });
   }
 
+
   async sendEmailReset(email: string, code: string) {
     await this.transporter.sendMail({
       from: 'hi i am muntzrdeveloper@gmail.com',

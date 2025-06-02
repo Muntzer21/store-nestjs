@@ -12,25 +12,29 @@ export class OrderController {
 
   @UseGuards(AuthGuard)
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto,@CurrentUser() currentUser) {
-    return this.orderService.create(createOrderDto,currentUser.id);
+  create(@Body() createOrderDto: CreateOrderDto, @CurrentUser() currentUser) {
+    return this.orderService.create(createOrderDto, currentUser.id);
   }
-
+  @UseGuards(AuthGuard)
   @Get()
   findAll() {
     return this.orderService.findAll();
   }
-
+  @UseGuards(AuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.orderService.findOne(+id);
   }
-
+  @UseGuards(AuthGuard)
   @Patch(':id')
-  updateOrderStatus(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderSatus,@CurrentUser() currentUser) {
-    return this.orderService.update(+id, updateOrderDto,currentUser);
+  updateOrderStatus(
+    @Param('id') id: string,
+    @Body() updateOrderDto: UpdateOrderSatus,
+    @CurrentUser() currentUser,
+  ) {
+    return this.orderService.update(+id, updateOrderDto, currentUser);
   }
-
+  @UseGuards(AuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.orderService.remove(+id);

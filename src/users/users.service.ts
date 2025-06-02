@@ -1,5 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
@@ -8,9 +11,10 @@ import { SignUpDto } from './dto/sign-up-dto';
 import * as bcrypt from 'bcrypt';
 import { SignInDto } from './dto/sign-in-dto';
 import { JwtService } from '@nestjs/jwt';
-import { Cron } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import { EmailService } from './mail/email.service';
 import { ChangePasswordDto } from './dto/change-password.dto';
+import e from 'express';
 
 @Injectable()
 export class UsersService {
@@ -120,7 +124,7 @@ export class UsersService {
     try {
       const users = await this.userReposirty.find();
       users.forEach(async (user) => {
-       await this.emailService.sendEmail(
+        await this.emailService.sendEmail(
           user.email,
           'sweet friday you have 50% off on all products if you frind to muntazer',
         );
@@ -129,21 +133,12 @@ export class UsersService {
       console.error('Error fetching users for cron job:', error);
     }
   }
-/**
- * to create a new user
- * @param signupUserDto body of the request
- * @returns create a new user
- */
-  create(signupUserDto: CreateUserDto) {
-    return 'This action adds a new user';
-  }
 
   /**
    * for get all users
    * @returns list of all users
    */
   findAll() {
-    return this.emailService.sendEmail();
     return this.userReposirty.find();
   }
 
@@ -234,7 +229,7 @@ export class UsersService {
    * @param updateUserDto body user to update
    * @returns update information
    */
- async update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }
 

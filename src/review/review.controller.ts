@@ -14,22 +14,22 @@ export class ReviewController {
   create(@Body() createReviewDto: CreateReviewDto, @CurrentUser() currentUser) {
     return this.reviewService.create(createReviewDto, currentUser);
   }
-
+  @UseGuards(AuthGuard)
   @Get()
   findAll() {
     return this.reviewService.findAll();
   }
-
+  @UseGuards(AuthGuard)
   @Get()
   findAllByProduct(@Body('product_id') product_id: number) {
     return this.reviewService.findAllByProduct(product_id);
   }
-
+  @UseGuards(AuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.reviewService.findOne(+id);
   }
-
+  @UseGuards(AuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
     return this.reviewService.update(+id, updateReviewDto);

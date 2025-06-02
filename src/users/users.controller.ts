@@ -4,7 +4,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { SignUpDto } from './dto/sign-up-dto';
 import { SignInDto } from './dto/sign-in-dto';
-// import { AuthGuard } from './guards/auth.guard';
 import { RolesUser } from './decorators/user-role.decorator';
 import { Roles } from 'src/utils/common/user-roles.enum';
 import { AuthRolesGuard } from './guards/auth-roles.guard';
@@ -16,7 +15,9 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post('sign-up')
-  signup(@Body() signupDto: SignUpDto) {
+  signup(@Body() signupDto: SignUpDto, @Req() req: any) {
+   console.log(req);
+    
     return this.usersService.signup(signupDto);
   }
 
@@ -25,15 +26,11 @@ export class UsersController {
     return this.usersService.signin(signupDto);
   }
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
-  }
-
-  // @RolesUser(Roles.ADMIN)
-  // @UseGuards(AuthRolesGuard)
+  @RolesUser(Roles.ADMIN)
+  @UseGuards(AuthRolesGuard)
   @Get('all')
   findAll() {
+    
     return this.usersService.findAll();
   }
 
@@ -43,7 +40,8 @@ export class UsersController {
   }
 
   @Get('current-user')
-  // @UseGuards(AuthGuard)
+  @RolesUser(Roles.USER)
+  @UseGuards(AuthRolesGuard)
   currentUser(@CurrentUser() user) {
     const user_id = user.id;
     return this.usersService.findOne(user_id);
@@ -52,7 +50,7 @@ export class UsersController {
   //http://localhost:3000/api/v1/users/google/login
   @Get('google/login')
   @UseGuards(AuthGuard('google'))
-  googleLogin(@Req() res: any,@Res() resp : any) {
+  googleLogin(@Req() res: any, @Res() resp: any) {
     return resp;
   }
 
@@ -61,26 +59,36 @@ export class UsersController {
   @UseGuards(AuthGuard('google'))
   googleCallback(@Req() res: any) {
     const user = res.user;
-    
-    return this.usersService.logGoogle(user)
+
+    return this.usersService.logGoogle(user);
   }
 
+  @RolesUser(Roles.USER)
+  @UseGuards(AuthRolesGuard)
   @Patch('change-password')
-    async changePassword(@Body() changePaasword : ChangePasswordDto,@CurrentUser() currentUser)
-  {
+  async changePassword(
+    @Body() changePaasword: ChangePasswordDto,
+    @CurrentUser() currentUser,
+  ) {
     const userId = currentUser.id;
     return this.usersService.changePassword(changePaasword, userId);
   }
-  
+
+  @RolesUser(Roles.USER)
+  @UseGuards(AuthRolesGuard)
   @Post('forgot-password')
   forgotPassword(@Body('email') email: string) {
     return this.usersService.forgotPassword(email);
   }
+  @RolesUser(Roles.USER)
+  @UseGuards(AuthRolesGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);
   }
 
+  @RolesUser(Roles.ADMIN)
+  @UseGuards(AuthRolesGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);

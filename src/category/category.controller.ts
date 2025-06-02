@@ -11,30 +11,41 @@ export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Post('create')
-    @RolesUser(Roles.ADMIN)
-    @UseGuards(AuthRolesGuard)
+  @RolesUser(Roles.ADMIN)
+  @UseGuards(AuthRolesGuard)
   create(@Body() createCategoryDto: CreateCategoryDto, @Req() req: Request) {
     console.log('hi');
-    
-    return this.categoryService.create(createCategoryDto,req['user']);
+
+    return this.categoryService.create(createCategoryDto, req['user']);
   }
 
   @Get()
+  @RolesUser(Roles.ADMIN)
+  @UseGuards(AuthRolesGuard)
   findAll() {
     return this.categoryService.findAll();
   }
 
   @Get('single/:id')
+  @RolesUser(Roles.ADMIN)
+  @UseGuards(AuthRolesGuard)
   findOne(@Param('id') id: string) {
     return this.categoryService.findOne(+id);
   }
 
   @Patch('update/:id')
-  update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
+  @RolesUser(Roles.ADMIN)
+  @UseGuards(AuthRolesGuard)
+  update(
+    @Param('id') id: string,
+    @Body() updateCategoryDto: UpdateCategoryDto,
+  ) {
     return this.categoryService.update(+id, updateCategoryDto);
   }
 
   @Delete(':id')
+  @RolesUser(Roles.ADMIN)
+  @UseGuards(AuthRolesGuard)
   remove(@Param('id') id: string) {
     return this.categoryService.remove(+id);
   }
