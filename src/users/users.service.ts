@@ -15,8 +15,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { EmailService } from './mail/email.service';
 import { ChangePasswordDto } from './dto/change-password.dto';
-import e from 'express';
-import { Cache } from '@nestjs/cache-manager';
+
 
 @Injectable()
 export class UsersService {
@@ -24,7 +23,6 @@ export class UsersService {
     @InjectRepository(User) private readonly userReposirty: Repository<User>,
     private readonly jwtService: JwtService,
     private readonly emailService: EmailService,
-    @Inject('CACHE_MANAGER') private cacheManager: Cache,
   ) {}
 
   /**
@@ -85,6 +83,7 @@ export class UsersService {
       email: user.email,
     });
 
+    // console.log(accessToken);
     
     return { msg: user, accessToken };
   }
@@ -152,14 +151,9 @@ export class UsersService {
    * @returns user from DB
    */
   async findOne(id: number) {
-    const cacheKey = `user:${id}`;
-    const cached :User= await this.cacheManager.get(cacheKey);
-    if (cached) {
-      return cached;
-    }
+   
     const user = await this.userReposirty.findOne({ where: { user_id: id } });
     if (!user) throw new BadRequestException('the user is not found');
-    await this.cacheManager.set(cacheKey, user);
     return user;
   }
 
