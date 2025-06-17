@@ -7,7 +7,6 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt/dist/jwt.service';
-import { Roles } from 'src/utils/common/user-roles.enum';
 import { Reflector } from '@nestjs/core';
 import { RolesUser } from '../decorators/user-role.decorator';
 import { UsersService } from '../users.service';
