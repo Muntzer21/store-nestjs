@@ -12,7 +12,7 @@ import { SignUpDto } from './dto/sign-up-dto';
 import * as bcrypt from 'bcrypt';
 import { SignInDto } from './dto/sign-in-dto';
 import { JwtService } from '@nestjs/jwt';
-import { Cron, CronExpression } from '@nestjs/schedule';
+import { Cron } from '@nestjs/schedule';
 import { EmailService } from './mail/email.service';
 import { ChangePasswordDto } from './dto/change-password.dto';
 
