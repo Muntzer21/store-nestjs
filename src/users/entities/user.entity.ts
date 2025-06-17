@@ -1,8 +1,9 @@
-import { Category } from 'src/category/entities/category.entity';
-import { Order } from 'src/order/entities/order.entity';
-import { Product } from 'src/product/entities/product.entity';
-import { Review } from 'src/review/entities/review.entity';
-import { Roles } from 'src/utils/common/user-roles.enum';
+// Update the import path below if the actual path is different, e.g.:
+import { Category } from '../../category/entities/category.entity';
+import { Order } from '../../order/entities/order.entity';
+import { Product } from '../../product/entities/product.entity';
+import { Review } from '../../review/entities/review.entity';
+import { Roles } from '../../utils/common/user-roles.enum';
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from 'typeorm';
 
 @Entity('users')

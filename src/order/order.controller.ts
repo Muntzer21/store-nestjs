@@ -1,9 +1,8 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
-import { CurrentUser } from 'src/users/decorators/current-user.decorator';
-import { AuthGuard } from 'src/users/guards/auth.guard';
+import { CurrentUser } from '../users/decorators/current-user.decorator';
+import { AuthGuard } from '../users/guards/auth.guard';
 import { UpdateOrderSatus } from './dto/update-order-status.dto';
 import { log } from 'console';
 

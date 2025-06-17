@@ -2,9 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards } fro
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { RolesUser } from 'src/users/decorators/user-role.decorator';
+import { RolesUser } from '../users/decorators/user-role.decorator';
 import { AuthRolesGuard } from 'src/users/guards/auth-roles.guard';
-import { Roles } from 'src/utils/common/user-roles.enum';
+import { Roles } from '../utils/common/user-roles.enum';
 import { CurrentUser } from 'src/users/decorators/current-user.decorator';
 
 @Controller('product')

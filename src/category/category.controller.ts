@@ -2,9 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } fro
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import { AuthRolesGuard } from 'src/users/guards/auth-roles.guard';
-import { RolesUser } from 'src/users/decorators/user-role.decorator';
-import { Roles } from 'src/utils/common/user-roles.enum';
+import { AuthRolesGuard } from '../users/guards/auth-roles.guard';
+import { RolesUser } from '../users/decorators/user-role.decorator';
+import { Roles } from '../utils/common/user-roles.enum';
 
 @Controller('category')
 export class CategoryController {

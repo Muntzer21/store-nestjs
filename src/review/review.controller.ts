@@ -2,8 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@n
 import { ReviewService } from './review.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
-import { CurrentUser } from 'src/users/decorators/current-user.decorator';
-import { AuthGuard } from 'src/users/guards/auth.guard';
+import { CurrentUser } from '../users/decorators/current-user.decorator';
+import { AuthGuard } from '../users/guards/auth.guard';
 
 @Controller('review')
 export class ReviewController {

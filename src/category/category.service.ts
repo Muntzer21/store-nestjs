@@ -4,7 +4,7 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from './entities/category.entity';
 import { Repository } from 'typeorm';
-import { User } from 'src/users/entities/user.entity';
+import { User } from '../users/entities/user.entity';
 
 @Injectable()
 export class CategoryService {
@@ -40,8 +40,10 @@ export class CategoryService {
    * @returns category object
    */
   async findOne(id: number) {
-    const category = await this.categoryReposirty.findOne({ where: { category_id: id } })
-    if(!category) throw new BadRequestException('the category its not found')
+    const category = await this.categoryReposirty.findOne({
+      where: { category_id: id },
+    });
+    if (!category) throw new BadRequestException('the category its not found');
     return category;
   }
 
@@ -58,7 +60,7 @@ export class CategoryService {
     if (!category) throw new BadRequestException('the category its not found');
     Object.assign(category, fields);
 
-    return this.categoryReposirty.save(category)
+    return this.categoryReposirty.save(category);
   }
 
   /**

@@ -5,9 +5,9 @@ import { Order } from './entities/order.entity';
 import { Repository } from 'typeorm';
 import { OrdersProducts } from './entities/orders.producta.entity';
 import { Shipping } from './entities/shipping.entity';
-import { UsersService } from 'src/users/users.service';
-import { Product } from 'src/product/entities/product.entity';
-import { ProductService } from 'src/product/product.service';
+import { UsersService } from '../users/users.service';
+import { Product } from '../product/entities/product.entity';
+import { ProductService } from '../product/product.service';
 import { OrderStatus } from './enums/oders-status';
 import { UpdateOrderSatus } from './dto/update-order-status.dto';
 

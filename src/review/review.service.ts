@@ -3,11 +3,10 @@ import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Review } from './entities/review.entity';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 import { Repository } from 'typeorm';
-import { ProductService } from 'src/product/product.service';
-import { User } from 'src/users/entities/user.entity';
-import { Product } from 'src/product/entities/product.entity';
+import { ProductService } from '../product/product.service';
+
 
 @Injectable()
 export class ReviewService {

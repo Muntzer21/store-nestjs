@@ -1,7 +1,7 @@
-import { Category } from "src/category/entities/category.entity";
-import { OrdersProducts } from "src/order/entities/orders.producta.entity";
-import { Review } from "src/review/entities/review.entity";
-import { User } from "src/users/entities/user.entity";
+import { Category } from "../../category/entities/category.entity";
+import { OrdersProducts } from "../../order/entities/orders.producta.entity";
+import { Review } from "../../review/entities/review.entity";
+import { User } from "../../users/entities/user.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'products' })
