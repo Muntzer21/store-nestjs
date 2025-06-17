@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -15,6 +16,7 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 import { EmailService } from './mail/email.service';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import e from 'express';
+import { Cache } from '@nestjs/cache-manager';
 
 @Injectable()
 export class UsersService {
@@ -22,6 +24,7 @@ export class UsersService {
     @InjectRepository(User) private readonly userReposirty: Repository<User>,
     private readonly jwtService: JwtService,
     private readonly emailService: EmailService,
+    @Inject('CACHE_MANAGER') private cacheManager: Cache,
   ) {}
 
   /**
@@ -82,6 +85,7 @@ export class UsersService {
       email: user.email,
     });
 
+    
     return { msg: user, accessToken };
   }
 
@@ -97,7 +101,7 @@ export class UsersService {
     if (!user) {
       const newUser = new User();
       newUser.email = userGoogle.profile.email;
-      newUser.password = 'NULL';
+      newUser.password = 'NULL'; // text pox to inter password after the login
       newUser.name = userGoogle.profile.displayName;
       let userDB = this.userReposirty.create(newUser);
       userDB = await this.userReposirty.save(newUser);
@@ -148,8 +152,14 @@ export class UsersService {
    * @returns user from DB
    */
   async findOne(id: number) {
+    const cacheKey = `user:${id}`;
+    const cached :User= await this.cacheManager.get(cacheKey);
+    if (cached) {
+      return cached;
+    }
     const user = await this.userReposirty.findOne({ where: { user_id: id } });
     if (!user) throw new BadRequestException('the user is not found');
+    await this.cacheManager.set(cacheKey, user);
     return user;
   }
 
@@ -186,25 +196,25 @@ export class UsersService {
    * @param email to find the user
    * @returns new reset code and expiry time
    */
-  async forgotPassword(email: string) {
-    const user = await this.userReposirty
-      .createQueryBuilder('users')
-      .addSelect('users.password')
-      .where('users.email=:email', { email: email })
-      .getOne();
-    if (!user) throw new NotFoundException('User not found');
+  // async forgotPassword(email: string) {
+  //   const user = await this.userReposirty
+  //     .createQueryBuilder('users')
+  //     .addSelect('users.password')
+  //     .where('users.email=:email', { email: email })
+  //     .getOne();
+  //   if (!user) throw new NotFoundException('User not found');
 
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
-    const expiry = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
+  //   const code = Math.floor(100000 + Math.random() * 900000).toString();
+  //   const expiry = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes
 
-    user.reset_code = code;
-    user.reset_code_expiry = expiry;
-    await this.userReposirty.save(user);
+  //   user.reset_code = code;
+  //   user.reset_code_expiry = expiry;
+  //   await this.userReposirty.save(user);
 
-    await this.emailService.sendEmailReset(user.email, user.reset_code);
+  //   await this.emailService.sendEmailReset(user.email, user.reset_code);
 
-    return { msg: 'Reset code sent to your email' };
-  }
+  //   return { msg: 'Reset code sent to your email' };
+  // }
 
   /**
    * to verify the reset code
@@ -212,16 +222,16 @@ export class UsersService {
    * @param code to verify
    * @returns confirmation message
    */
-  async verifyResetCode(email: string, code: string) {
-    const user = await this.userReposirty.findOne({ where: { email } });
-    if (!user || user.reset_code !== code) {
-      throw new BadRequestException('Invalid code');
-    }
-    if (user.reset_code_expiry < new Date()) {
-      throw new BadRequestException('Code expired');
-    }
-    return { msg: 'Code verified' };
-  }
+  // async verifyResetCode(email: string, code: string) {
+  //   const user = await this.userReposirty.findOne({ where: { email } });
+  //   if (!user || user.reset_code !== code) {
+  //     throw new BadRequestException('Invalid code');
+  //   }
+  //   if (user.reset_code_expiry < new Date()) {
+  //     throw new BadRequestException('Code expired');
+  //   }
+  //   return { msg: 'Code verified' };
+  // }
 
   /**
    *  update user information

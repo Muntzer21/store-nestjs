@@ -21,6 +21,7 @@ export class AuthGuard implements CanActivate {
     }
 
     const token = authHeader.split(' ')[1];
+    
     if (!token) {
       throw new UnauthorizedException('Token is missing');
     }
@@ -31,6 +32,8 @@ export class AuthGuard implements CanActivate {
       });
 
       request['user'] = payload;
+      console.log('its work');
+      
       return true;
     } catch (error) {
       throw new UnauthorizedException('Invalid token');

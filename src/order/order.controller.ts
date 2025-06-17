@@ -5,6 +5,7 @@ import { UpdateOrderDto } from './dto/update-order.dto';
 import { CurrentUser } from 'src/users/decorators/current-user.decorator';
 import { AuthGuard } from 'src/users/guards/auth.guard';
 import { UpdateOrderSatus } from './dto/update-order-status.dto';
+import { log } from 'console';
 
 @Controller('order')
 export class OrderController {
@@ -13,6 +14,7 @@ export class OrderController {
   @UseGuards(AuthGuard)
   @Post()
   create(@Body() createOrderDto: CreateOrderDto, @CurrentUser() currentUser) {
+    log('we are in the order controller');
     return this.orderService.create(createOrderDto, currentUser.id);
   }
   @UseGuards(AuthGuard)

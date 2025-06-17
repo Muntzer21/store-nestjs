@@ -17,7 +17,7 @@ export class ProductService {
     private readonly categoryService: CategoryService,
     private readonly userService: UsersService,
     // private readonly jwtService: JwtService,
-  ) { }
+  ) {}
   /**
    * to create a new product
    * @param createProductDto body of the request
@@ -43,6 +43,17 @@ export class ProductService {
    */
   findAll() {
     return this.productReposirty.find();
+  }
+
+  /**
+   * get all products
+   * @returns all products in the DB
+   */
+  findSome() {
+    return this.productReposirty.find({
+      skip: 7, 
+      take: 6, 
+    });
   }
 
   /**
@@ -73,7 +84,7 @@ export class ProductService {
   /**
    * to update a product by its id
    * @param id product id
-   * @param updateProductDto 
+   * @param updateProductDto
    * @returns new updated product object
    */
   async update(id: number, updateProductDto: UpdateProductDto) {

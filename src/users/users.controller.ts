@@ -15,22 +15,22 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post('sign-up')
-  signup(@Body() signupDto: SignUpDto, @Req() req: any) {
-   console.log(req);
-    
+  signup(@Body() signupDto: SignUpDto) {
+
     return this.usersService.signup(signupDto);
   }
 
   @Post('sign-in')
   signin(@Body() signupDto: SignInDto) {
+    // console.log(req.body);
+
     return this.usersService.signin(signupDto);
   }
 
-  @RolesUser(Roles.ADMIN)
-  @UseGuards(AuthRolesGuard)
+  // @RolesUser(Roles.ADMIN)
+  // @UseGuards(AuthRolesGuard)
   @Get('all')
   findAll() {
-    
     return this.usersService.findAll();
   }
 
@@ -46,7 +46,7 @@ export class UsersController {
     const user_id = user.id;
     return this.usersService.findOne(user_id);
   }
-
+  // button click then request this end point
   //http://localhost:3000/api/v1/users/google/login
   @Get('google/login')
   @UseGuards(AuthGuard('google'))
@@ -74,12 +74,12 @@ export class UsersController {
     return this.usersService.changePassword(changePaasword, userId);
   }
 
-  @RolesUser(Roles.USER)
-  @UseGuards(AuthRolesGuard)
-  @Post('forgot-password')
-  forgotPassword(@Body('email') email: string) {
-    return this.usersService.forgotPassword(email);
-  }
+  // @RolesUser(Roles.USER)
+  // @UseGuards(AuthRolesGuard)
+  // @Post('forgot-password')
+  // forgotPassword(@Body('email') email: string) {
+  //   return this.usersService.forgotPassword(email);
+  // }
   @RolesUser(Roles.USER)
   @UseGuards(AuthRolesGuard)
   @Patch(':id')

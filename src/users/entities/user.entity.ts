@@ -22,11 +22,11 @@ export class User {
   @UpdateDateColumn()
   updateAt: Timestamp;
 
-  @Column({ nullable: true })
-  reset_code: string;
+  // @Column({ nullable: true })
+  // reset_code: string;
 
-  @Column({ nullable: true, type: 'timestamp' })
-  reset_code_expiry: Date;
+  // @Column({ nullable: true, type: 'timestamp' })
+  // reset_code_expiry: Date;
 
   @OneToMany(() => Category, (category) => category.addedBy)
   categories: Category[];

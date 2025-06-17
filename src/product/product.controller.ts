@@ -11,19 +11,24 @@ import { CurrentUser } from 'src/users/decorators/current-user.decorator';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @Post('create')
-  @RolesUser(Roles.USER)
+  @RolesUser(Roles.ADMIN)
   @UseGuards(AuthRolesGuard)
-  @Post('add-product')
+  @Post('create')
   create(@Body() createProductDto: CreateProductDto, @CurrentUser() user) {
-
     return this.productService.create(createProductDto, user);
   }
-  @RolesUser(Roles.USER)
+  @RolesUser(Roles.ADMIN)
   @UseGuards(AuthRolesGuard)
   @Get()
   findAll() {
     return this.productService.findAll();
+  }
+
+  @RolesUser(Roles.ADMIN)
+  @UseGuards(AuthRolesGuard)
+  @Get('get-products')
+  findsome() {
+    return this.productService.findSome();
   }
   @RolesUser(Roles.USER)
   @UseGuards(AuthRolesGuard)
