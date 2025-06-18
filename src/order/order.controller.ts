@@ -13,7 +13,6 @@ export class OrderController {
   @UseGuards(AuthGuard)
   @Post()
   create(@Body() createOrderDto: CreateOrderDto, @CurrentUser() currentUser) {
-    log('we are in the order controller');
     return this.orderService.create(createOrderDto, currentUser.id);
   }
   @UseGuards(AuthGuard)

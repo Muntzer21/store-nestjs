@@ -29,7 +29,6 @@ export class OrderService {
    * @returns new order in DB
    */
   async create(createOrderDto: CreateOrderDto, user_id: number) {
-    console.log('we are in the order service');
     
     const shipping = new Shipping();
     Object.assign(shipping, createOrderDto.shippingAddress);

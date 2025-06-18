@@ -11,7 +11,7 @@ export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Post('create')
-  @RolesUser(Roles.ADMIN)
+  @RolesUser(Roles.USER)
   @UseGuards(AuthRolesGuard)
   create(@Body() createCategoryDto: CreateCategoryDto, @Req() req: Request) {
     console.log('hi');

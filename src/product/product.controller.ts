@@ -11,13 +11,13 @@ import { CurrentUser } from 'src/users/decorators/current-user.decorator';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @RolesUser(Roles.ADMIN)
+  @RolesUser(Roles.USER)
   @UseGuards(AuthRolesGuard)
   @Post('create')
   create(@Body() createProductDto: CreateProductDto, @CurrentUser() user) {
     return this.productService.create(createProductDto, user);
   }
-  @RolesUser(Roles.ADMIN)
+  @RolesUser(Roles.USER)
   @UseGuards(AuthRolesGuard)
   @Get()
   findAll() {
